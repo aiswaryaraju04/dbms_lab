@@ -60,7 +60,7 @@ ORDER BY TOTALMARK DESC;
 
 --7. Find pass percentage of the class for mathematics
 
-SELECT MAX((SELECT COUNT(MATHS) FROM STUDENT WHERE MATHS>24)/(SELECT COUNT(*) FROM STUDENT)*100)
+SELECT MAX((SELECT COUNT(MATHS) FROM STUDENT WHERE MATHS>24)/10*100)
 FROM STUDENT;
 
 --8. Find the overall pass percentage for all class.
