@@ -1,0 +1,102 @@
+1. Create a function factorial to find the factorial of a number. Use this function in a PL/SQL Program to display the factorial of a number read from the user. 
+
+DECLARE
+num int; 
+factorial int;
+FUNCTION fact(x int) RETURN int IS f int; 
+BEGIN
+IF x=0 THEN 
+f :=1;
+ELSE
+f := x * fact(x-1); 
+END IF; 
+RETURN f;
+END;
+BEGIN
+num:=:num;
+factorial := fact(num);
+dbms_output.put_line(' Factorial '|| num || ' is ' || factorial);
+END;
+
+2. Create a table student_details(roll int,marksint, phone int). Create a procedure pr1 to update all rows in the database. Boost the marks of all students by 5%. 
+
+CREATE TABLE student_details(roll int,marks int, phone int);
+INSERT INTO student_details VALUES(1,70,9496947423);
+INSERT INTO student_details VALUES(2,85,9495941358);
+INSERT INTO student_details VALUES(3,78,8281865009);
+SELECT * FROM student_details;
+
+DECLARE
+CURSOR c_student is SELECT marks,roll FROM student_details; 
+stud_rec c_student%rowtype;
+PROCEDURE upgrade(x IN int,z IN int) IS 
+BEGIN
+UPDATE student_details SET marks = x+(5/100)*x WHERE roll=z; 
+END;
+BEGIN
+OPEN c_student;
+LOOP
+FETCH c_student into stud_rec; 
+EXIT WHEN c_student%notfound; 
+upgrade(stud_rec.marks,stud_rec.roll); 
+END LOOP;
+END;
+
+SELECT * FROM student_details;
+
+3. Create table student (id, name, m1, m2, m3, total, grade).Create a function f1 to calculate grade. Create a procedure  p1 to update the total and grade.  
+• Read id,name,m1,m2,m3 from the user
+ • Insert the tuple into the database
+ • Using function f1 calculate the grade 
+Using procedure p1, update the grade value for the tuple 
+CREATE TABLE students(id int,name varchar(10),m1 int,m2 int,m3 int,total int,grade varchar(1));
+
+DECLARE
+total int; 
+id int; 
+m1 int; 
+m2 int; 
+m3 int; 
+g char;
+grade varchar2(1); 
+name varchar2(10);
+FUNCTION find_grade(x IN int) RETURN varchar2 IS 
+z varchar2(1);
+BEGIN
+IF x>240 then 
+z:='A';
+ELSIF x>210 then 
+z:='B';
+ELSIF x>180 then 
+z:='C';
+ELSIF x>180 then 
+z:='C';
+ELSIF x>150 then 
+z:='D';
+ELSE 
+z:='F'; 
+END IF;
+RETURN z;
+END;
+PROCEDURE upgrade(a IN int,b IN varchar2,c IN int,d IN int,e IN int,x IN int,y IN 
+varchar2) IS
+BEGIN
+INSERT INTO students VALUES(a,b,c,d,e,x,y);
+END;
+BEGIN
+
+id:=:id; 
+name:=:name; 
+m1:=:m1;
+m2:=:m2;
+m3:=:m3;
+total:=m1+m2+m3; 
+grade:=find_grade(total); 
+upgrade(id,name,m1,m2,m3,total,grade);
+END;
+
+select *from students
+
+
+
+
