@@ -1,0 +1,99 @@
+CREATING VIEWS
+We can create View using CREATE VIEW statement. A View can be created from a single table or multiple tables. 
+Syntax:
+ CREATE VIEW view_name AS 
+SELECT column1, column2.....
+ FROM table_name 
+WHERE condition; 
+view_name: Name for the View 
+table_name: Name of the table 
+condition: Condition to select rows
+ Creating View from multiple tables:
+ CREATE VIEW view_name AS 
+SELECT table1.coloumn1, table1.coloumn2, table2.coloumn1,…… 
+FROM table 1, table2 
+WHERE table1. coloumn1 = table2. coloumn2; 
+Ex: CREATE VIEW MarksView AS
+ SELECT StudentDetails.NAME, StudentDetails.ADDRESS, StudentMarks.MARKS 
+FROM StudentDetails, StudentMarks 
+WHERE StudentDetails.NAME = StudentMarks.NAME; 
+QUESTION
+ i)Create a table named Bank with the following attributes –
+bankcode (To be set as Primary Key, type= varchar(3))
+ -bankname (Should not beNULL)
+ -headoffice
+ -branches (Integer value greater than Zero)
+ Populate the database.
+ Make sure that all constraints are working properly. 
+All constraints have to be set after creating the table.
+
+CREATE TABLE BANK(bankcode varchar(3),
+                  bankname varchar(30) not null,
+                  headoffice varchar(30),
+                  branches int not null check(branches>0),
+                  primary key(bankcode)    
+                  );
+                  
+insert into BANK values('SBT','SBI Bank','Delhi',30);
+insert into BANK values('CNB','Canara Bank','Ernakulam',20);
+insert into BANK values('SIB','South Indian Bank','Madras',30);
+insert into BANK values('AXB','Axis Bank','Kottayam',15);
+insert into BANK values('FDB','Federal Bank','Ernakulam',25);
+
+select * from BANK;
+
+ii)Create a table named Branch with the following attribute
+ -branchid (To be set as PrimaryKey)
+ -branchname (Set Default value as ‘New Delhi’) 
+– bankid (Foreign Key:- Refers to bankcode of Bank table)
+ Populate the database. 
+Make sure that all constraints are working properly 
+CREATE TABLE Branch(branchid int,
+                  branchname varchar(30) DEFAULT 'New Delhi',
+                   bankcode varchar(3),
+                  primary key(branchid)
+                  );
+
+ALTER TABLE Branch
+ADD FOREIGN KEY(bankcode) references BANK(bankcode);
+
+insert into Branch values(111,DEFAULT,'SBT');
+insert into Branch values(112,DEFAULT,'CNB');
+insert into Branch values(113,DEFAULT,'SIB');
+insert into Branch values(114,DEFAULT,'AXB');
+insert into Branch values(115,DEFAULT,'FDB');
+insert into Branch values(112,'Kottayam','CNB');
+insert into Branch values(115,'Kottayam','FDB');
+
+select * from Branch;
+
+iii) Delete the bank with bank code ‘SBT’ and make sure that the corresponding entries are getting deleted from the related tables.
+delete from Branch where bankcode='SBT';
+ 
+select * from Branch;
+
+ iv) Drop the Primary Key in branch using ALTER command 
+ALTER TABLE Branch
+DROP PRIMARY KEY ;
+
+v) Create a View named bank_headoffice to hold the details of all bank whose head office at Ernakulam. 
+CREATE VIEW bank_headoffice AS 
+SELECT bankcode,bankname,headoffice,branches
+FROM BANK 
+WHERE headoffice='Ernakulam';
+ 
+select * from bank_headoffice;
+
+vi) Create a View named bank_branch to hold the details of all bank who have branches at Kottayam
+CREATE VIEW bank_branch AS 
+SELECT *
+FROM Branch
+WHERE branchname='Kottayam';
+
+select * from bank_branch;
+
+
+
+
+
+
