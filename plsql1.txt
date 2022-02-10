@@ -95,7 +95,7 @@ grade:=find_grade(total);
 upgrade(id,name,m1,m2,m3,total,grade);
 END;
 
-select *from students
+select *from students;
 
 
 
