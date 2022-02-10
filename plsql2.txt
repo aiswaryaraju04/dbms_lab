@@ -23,13 +23,6 @@ q:=:q;
 Pk1.proc1(p,q);
 END;
 
-CREATE OR REPLACE PACKAGE Pk1 AS
-PROCEDURE proc1(a int,b  int); 
-PROCEDURE proc2(a int); 
-FUNCTION fn11(a int) return varchar2;
-FUNCTION fn22(a int,b   int,c   int) return INT; 
-END Pk1;
-
 Call the functions f11,f22 and procedures pro1,pro2 within the program and display their result. 
 CREATE OR REPLACE PACKAGE Pk1 AS
 PROCEDURE proc1(a int,b  int); 
